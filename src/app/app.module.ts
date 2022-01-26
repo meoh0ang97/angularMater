@@ -15,9 +15,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
+import { EditvendorComponent } from './edit/editvendor/editvendor.component';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EditvendorComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import { MatSortModule } from '@angular/material/sort';
     ScrollingModule,
     MatInputModule,
     MatIconModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ],
   providers: [VendorService ],
   bootstrap: [AppComponent]

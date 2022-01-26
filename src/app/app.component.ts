@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { EditvendorComponent } from './edit/editvendor/editvendor.component';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +17,14 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 })
 export class AppComponent {
   title = 'my-app';
+  animal: string='';
+  name: string='';
   checkedl=false;
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  displayedColumns: string[] = ['id', 'name', 'code', 'address', 'phone', 'email', 'inactive', 'delete', 'update', 'details'];
+  displayedColumns: string[] = ['id', 'name', 'code', 'address', 'phone', 'email', 'inactive', 'method'];
   dataSource = new MatTableDataSource<VendorDTO>();
   model: VendorSearchModel = {
     active: null,
@@ -44,7 +48,7 @@ export class AppComponent {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   sort!: MatSort;
-  constructor(private service: VendorService, private _liveAnnouncer: LiveAnnouncer) {
+  constructor(private service: VendorService, private _liveAnnouncer: LiveAnnouncer,public dialog: MatDialog) {
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -83,5 +87,18 @@ export class AppComponent {
     this.model.active=this.checkedl;
     console.log(this.checkedl)
     this.GetData();
+  }
+  openDialog(): void {
+    var val = document.getElementById("searchInput") as HTMLInputElement;
+
+    const dialogRef = this.dialog.open(EditvendorComponent, {
+      width: '250px',
+      data: {name: val.value, animal:"animal"},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 }
