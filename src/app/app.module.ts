@@ -17,6 +17,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import { EditvendorComponent } from './edit/editvendor/editvendor.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { AngularSplitModule } from 'angular-split';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +39,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatInputModule,
     MatIconModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule,
+    MatGridListModule,
+    AngularSplitModule
   ],
   providers: [VendorService ],
   bootstrap: [AppComponent]

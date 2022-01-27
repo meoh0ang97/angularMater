@@ -17,13 +17,14 @@ import { EditvendorComponent } from './edit/editvendor/editvendor.component';
 })
 export class AppComponent {
   title = 'my-app';
+  panelOpenState = false;
   animal: string='';
   name: string='';
   checkedl=false;
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [5, 50, 100];
   displayedColumns: string[] = ['id', 'name', 'code', 'address', 'phone', 'email', 'inactive', 'method'];
   dataSource = new MatTableDataSource<VendorDTO>();
   model: VendorSearchModel = {
