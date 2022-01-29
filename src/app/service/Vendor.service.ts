@@ -35,6 +35,15 @@ export class VendorService {
             catchError(this.handleError) // then handle the error
         );
     }
+
+getTreeView(): Observable<ResultMessageResponse<TreeView>> {
+  
+    var url = this.baseUrl + `WareHouses/get-tree-view?Active=true`;
+    return this.http.get<ResultMessageResponse<TreeView>>(url, this.httpOptions).pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError) // then handle the error
+    );
+}
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
             // A client-side or network error occurred. Handle it accordingly.
@@ -49,4 +58,34 @@ export class VendorService {
         return throwError(
             'Something bad happened; please try again later.');
     }
+}
+
+export interface TreeView {
+    code:         string;
+    name:         string;
+    address:      null;
+    parentId:     null | string;
+    path:         null | string;
+    description:  null;
+    inactive:     boolean;
+    children:     TreeView[];
+    active:       boolean;
+    data:         null;
+    expanded:     boolean;
+    extraClasses: null;
+    focus:        boolean;
+    folder:       boolean;
+    hideCheckbox: boolean;
+    icon:         null;
+    key:          string;
+    lazy:         boolean;
+    refKey:       null;
+    selected:     boolean;
+    title:        string;
+    tooltip:      string;
+    unselectable: boolean;
+    level:        number;
+}
+
+export interface Errors {
 }

@@ -20,6 +20,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { AngularSplitModule } from 'angular-split';
+import {MatTreeModule} from '@angular/material/tree';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,8 @@ import { AngularSplitModule } from 'angular-split';
     MatDialogModule,
     MatExpansionModule,
     MatGridListModule,
-    AngularSplitModule
+    AngularSplitModule,
+    MatTreeModule
   ],
   providers: [VendorService ],
   bootstrap: [AppComponent]

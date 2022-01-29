@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { VendorService } from './service/Vendor.service';
+import { TreeView, VendorService } from './service/Vendor.service';
 import { VendorSearchModel } from './model/VendorSearchModel';
 import { VendorDTO } from './model/VendorDTO';
 import { ResultMessageResponse } from './model/ResultMessageResponse';
@@ -9,14 +9,47 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EditvendorComponent } from './edit/editvendor/editvendor.component';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
   title = 'my-app';
+//tree-view
+private _transformer = (node: TreeView, level: number) => {
+  return {
+    expandable: !!node.children && node.children.length > 0,
+    name: node.name,
+    level: level,
+  };
+};
+
+treeControl = new FlatTreeControl<ExampleFlatNode>(
+  node => node.level,
+  node => node.expandable,
+);
+
+treeFlattener = new MatTreeFlattener(
+  this._transformer,
+  node => node.level,
+  node => node.expandable,
+  node => node.children,
+);
+
+dataSourceTreee = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  //
   panelOpenState = false;
   animal: string='';
   name: string='';
@@ -51,14 +84,18 @@ export class AppComponent {
   sort!: MatSort;
   constructor(private service: VendorService, private _liveAnnouncer: LiveAnnouncer,public dialog: MatDialog) {
   }
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
   ngOnInit() {
     this.GetData();
+    this.service.getTreeView().subscribe(x=>this.dataSourceTreee.data=x.data);
   }
-
+  lll(l:string){
+    console.log(l);
+  }
   GetData() {
     this.service.getList(this.model).subscribe(list => {
       this.dataSource.data = list.data; setTimeout(() => {
